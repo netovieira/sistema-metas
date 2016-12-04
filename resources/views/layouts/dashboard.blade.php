@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>Windsoft - Sistema de Metas</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -13,11 +13,47 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="css/app.min.css">
+    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/skins/skin-blue-light.min.css">
     <!-- Pace style -->
     <link rel="stylesheet" href="plugins/pace/pace.min.css">
 
+    {{--CUSTOM STYLES--}}
+    @if (isset($css))
+        @foreach ($css as $c)
+            <link rel="stylesheet" href="{{ $c['link'] }}"
+                    @if (array_key_exists('options', $c))
+                        {{ $c['options'] }}
+                    @endif
+            />
+        @endforeach
+    @endif
+
+
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 2.2.3 -->
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- App -->
+    <script src="js/app.min.js"></script>
+    <!-- PACE -->
+    <script src="plugins/pace/pace.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.js"></script>
+
+    {{--CUSTOM SCRIPTS--}}
+    @if (isset($scripts))
+        @foreach($scripts as $s)
+            <script src="{{ $s['link'] }}"
+            @if (array_key_exists('options', $s))
+                {{ $s['options'] }}
+                    @endif
+            ></script>
+        @endforeach
+    @endif
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,16 +68,9 @@
     @include('partials.sidebar')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        @include('partials.page-header')
-        <!-- Main content -->
-        <section class="content">
 
-            <!-- Your Page Content Here -->
-            @yield('content')
+        @yield('content')
 
-        </section>
-        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
@@ -62,7 +91,7 @@
                 <h3 class="control-sidebar-heading">Recent Activity</h3>
                 <ul class="control-sidebar-menu">
                     <li>
-                        <a href="javascript::;">
+                        <a href="javascript::">
                             <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
                             <div class="menu-info">
@@ -78,7 +107,7 @@
                 <h3 class="control-sidebar-heading">Tasks Progress</h3>
                 <ul class="control-sidebar-menu">
                     <li>
-                        <a href="javascript::;">
+                        <a href="javascript::">
                             <h4 class="control-sidebar-subheading">
                                 Custom Template Design
                                 <span class="pull-right-container">
@@ -126,20 +155,5 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
-<!-- REQUIRED JS SCRIPTS -->
-
-<!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- App -->
-<script src="js/app.min.js"></script>
-<!-- PACE -->
-<script src="plugins/pace/pace.min.js"></script>
-<!-- SlimScroll -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
 </body>
 </html>
