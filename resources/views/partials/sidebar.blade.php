@@ -10,9 +10,9 @@
                 <img src="img/avatar5.png" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::user()->name }}</p>
+{{--                <p>{{ Auth::user()->name }}</p>--}}
                 <!-- Status -->
-                <a href="javascript:void(0);">{{ Auth::user()->Office()->name }}</a>
+{{--                <!--<a href="javascript:void(0);">{{ Auth::user()->Office()->name }}</a>-->--}}
             </div>
         </div>
 
@@ -71,7 +71,7 @@
                 </ul>
             </li>
 
-            @if( is_null(Auth::user()->Office()->boss_id) )
+{{--            @if( is_null(Auth::user()->Office()->boss_id) )--}}
                 <li class="treeview @if(Request::is('/metas') || Request::is("/metas/*")) active  @endif">
                     <a href="#">
                         <i class="fa fa-bar-chart"></i> <span>Metas</span>
@@ -107,7 +107,7 @@
                             <a href="{!! url('/cargoscreate') !!}"><i class="fa fa-circle-o"></i> Crie um novo!</a></li>
                     </ul>
                 </li>
-            @endif
+            {{--@endif--}}
         </ul>
         <!-- /.sidebar-menu -->
     </section>
