@@ -10,7 +10,7 @@ class NoteController extends Controller
 {
 
     public function __construct(){
-        $this->obj = Note::class;
+        $this->class = Note::class;
         $this->modelName = 'Anotação';
         $this->path = 'pages.note';
     }
@@ -43,9 +43,10 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        $this->obj = new $this->obj;
-        $this->obj->created_by = Auth::user()->id;
-        parent::store($request, false);
+        $this->createObj = false;
+        $this->class = new $this->class;
+        $this->class->created_by = Auth::user()->id;
+        parent::store($request);
     }
 
     /**

@@ -1,6 +1,4 @@
-@extends('layouts.dashboard', [ 'css' =>     [ ['link' => '../../plugins/datatables/dataTables.bootstrap.css'] ],
-                                'scripts' => [ ['link' => '../../plugins/datatables/jquery.dataTables.min.js'],
-                                               ['link' => '../../plugins/datatables/dataTables.bootstrap.min.js'] ]])
+@extends('layouts.dashboard')
 
 @section('content')
     <!-- Content Header (Page header) -->

@@ -22,6 +22,7 @@ class CreateGoalsTable extends Migration
             $table->text('description');
             $table->morphs('do');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class GoalController extends Controller
 {
     public function __construct(){
-        $this->obj = Goal::class;
+        $this->class = Goal::class;
         $this->modelName = 'Meta';
         $this->path = 'pages.goal';
     }

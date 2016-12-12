@@ -17,49 +17,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'office_id',
     ];
-    protected $UpdateFields = [
-        [
-            'name'      => 'name',
-            'label'     => 'Nome',
-            'type'      => 'input',
-            'required'  => true,
-            'autofocus' => true
-        ],
-        [
-            'name'      => 'email',
-            'label'     => 'E-mail',
-            'type'      => 'input',
-            'required'  => true,
-            'autofocus' => false
-        ],
-        [
-            'name'      => 'office_id',
-            'label'     => 'Cargo',
-            'type'      => 'select',
-            'options'   => [
-                'lookup' => 'lookupOffice',
-                'key'    => 'id',
-                'value'  => 'name'
-            ],
-            'required'  => true,
-            'autofocus' => false,
-        ],
-    ];
-    protected $ExibitionFields = [
-        [
-            'value' => 'name',
-            'label' => 'Nome',
-        ],
-        [
-            'value' => 'email',
-            'label' => 'E-mail',
-        ],
-        [
-            'value' => 'office_id',
-            'label' => 'Cargo',
-            'text'  => 'GetOfficeName',
-        ],
-    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -83,5 +40,8 @@ class User extends Authenticatable
     }
     public function GetOfficeName(){
         return $this->Office()->name;
+    }
+    public function Notes(){
+        return $this->hasMany('App\Note')->get();
     }
 }

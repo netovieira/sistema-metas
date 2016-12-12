@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -14,14 +15,19 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $obj, //Contém Model atual
+    protected $class, //Contém Model atual
+              $obj, //Nome do model
               $modelName, //Nome do model
-              $path; //Caminho views
+              $path,
+        $err; //Caminho views
+
+    protected $needAdminAuth,
+              $createObj;
 
 
     private function FindRegister($id){
         try{
-            $this->obj::findOrFail($id);
+            $this->obj = $this->class::findOrFail($id);
         }
         catch (Exception $e){
             return $this->RegisterLog($e, $this->modelName.' não encontrado(a)!');
@@ -29,6 +35,7 @@ class Controller extends BaseController
     }
 
     private function RegisterLog(Exception $e, $CustomError){
+        $this->err = $e->getMessage();
         Log::error('Code: '.$e->getCode() . ' :: Line: '.$e->getLine() . ' :: Message: '.$e->getMessage());
         return $CustomError;
     }
@@ -40,7 +47,7 @@ class Controller extends BaseController
      */
     protected function index()
     {
-        return view($this->path.'.index', compact( $this->obj::all() ) );
+        return view($this->path.'.index', [ compact( $this->class::all() ) , "needAdminAuth" => $this->needAdminAuth ] );
     }
 
     /**
@@ -50,7 +57,7 @@ class Controller extends BaseController
      */
     protected function create()
     {
-        return view($this->path . '.create', ['fields' => $this->obj->UpdateFields] );
+        return view($this->path . '.create', ["needAdminAuth" => $this->needAdminAuth] );
     }
 
     /**
@@ -59,12 +66,12 @@ class Controller extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    protected function store(Request $request, $createObj = true)
+    protected function store(Request $request)
     {
         try {
-            if ( $createObj ) $model = new $this->obj;
-            $model->update($request->all());
-            $model->save();
+            if ( $this->createObj ) $this->obj = new $this->class;
+            $this->obj->update($request->all());
+            $this->obj->save();
         }catch (Exception $e){
             $this->RegisterLog($e, 'Ocorreu um erro ao tentar gravar o registro!');
         }
@@ -78,8 +85,8 @@ class Controller extends BaseController
      */
     protected function show($id)
     {
-        return view($this->path . '.show', [compact($this->obj::findOrFail($id)),
-                                            'fields' => $this->obj->ExibitionFields]  );
+        return view($this->path . '.show', ["report" => $this->class::findOrFail($id),
+                                            "needAdminAuth" => $this->needAdminAuth]  );
     }
 
     /**
@@ -90,8 +97,8 @@ class Controller extends BaseController
      */
     protected function edit($id)
     {
-        return view($this->path . '.show', [compact($this->obj::findOrFail($id)),
-                                            'fields' => $this->obj->UpdateFields]  );
+        return view($this->path . '.show', [compact($this->class::findOrFail($id)),
+                                            "needAdminAuth" => $this->needAdminAuth]  );
     }
 
     /**
@@ -104,7 +111,7 @@ class Controller extends BaseController
     protected function update(Request $request, $id)
     {
         try {
-            FindRegister($id);
+            $this->FindRegister($id);
             $this->obj->update($request->all());
             $this->obj->save();
         }

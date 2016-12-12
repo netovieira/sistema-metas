@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function __construct(){
-        $this->obj = User::class;
+        $this->class = User::class;
         $this->modelName = 'Usuário';
         $this->path = 'pages.user';
+        $this->needAdminAuth = true;
     }
 
     /**
@@ -91,7 +91,7 @@ class UserController extends Controller
     }
 
     public function changePassoword(){
-        return view($this->path'.changepassword');
+        return view($this->path.'.changepassword');
     }
 
     public function updatePassoword(Request $request, $id){
@@ -103,5 +103,10 @@ class UserController extends Controller
         $u->update($request->input('newpassword'));
         $u->save();
         return 'Senha alterada  com sucesso!';
+    }
+
+    public function dashboard()
+    {
+        return view('pages.report.index');
     }
 }

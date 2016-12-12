@@ -9,22 +9,8 @@
 
     <!-- Main content -->
     <section class="content">
-
-        <!-- Default box -->
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    @yield('listTitle')
-                </h3>
-            </div>
-            <div class="box-body">
-                @yield('form')
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-
+        @yield('form')
     </section>
     <!-- /.content -->
 
-@stop
+@endsection

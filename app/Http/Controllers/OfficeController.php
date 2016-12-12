@@ -10,7 +10,7 @@ class OfficeController extends Controller
 
     public function __construct()
     {
-        $this->obj = Office::class;
+        $this->class = Office::class;
         $this->modelName = 'Cargo';
         $this->path = 'pages.office';
     }
