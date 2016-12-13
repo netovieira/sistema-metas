@@ -97,7 +97,7 @@
                 items = JSON.stringify(items);
                 $(form).find('[name="items"]').val(items);
                 $(form).submit();
-            })
+            });
         });
     </script>
 @endsection
